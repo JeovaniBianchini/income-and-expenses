@@ -6,32 +6,19 @@ import java.time.LocalDate;
 
 public class ExpensesDto {
 
-    private Long id;
     private String description;
     private Double value;
-    private LocalDate date;
 
-    public ExpensesDto(Long id, String description, Double value, LocalDate date) {
-        this.id = id;
+    public ExpensesDto(String description, Double value) {
         this.description = description;
         this.value = value;
-        this.date = date;
     }
 
     public ExpensesDto(Expenses expense) {
-        id = expense.getId();
         description = expense.getDescription();
         value = expense.getValue();
-        date = expense.getDate();
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getDescription() {
         return description;
@@ -49,11 +36,4 @@ public class ExpensesDto {
         this.value = value;
     }
 
-    public LocalDate getDate() {
-        return date;
-    }
-
-    public void setDate(LocalDate date) {
-        this.date = date;
-    }
 }

@@ -9,9 +9,13 @@ public class Expenses {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
+    @Column(name = "description")
     private String description;
+    @Column(name = "value")
     private Double value;
+    @Column(name = "date")
     private LocalDate date;
 
     public Expenses(){

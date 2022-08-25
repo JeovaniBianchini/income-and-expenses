@@ -1,7 +1,11 @@
 package com.bianchinijeovani.incomeandexpenses.models;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 @Entity
 @Table(name = "tb_income")
@@ -9,9 +13,13 @@ public class Income {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
+    @Column(name = "description")
     private String description;
+    @Column(name = "value")
     private Double value;
+    @Column(name = "date")
     private LocalDate date;
 
     public Income(){
