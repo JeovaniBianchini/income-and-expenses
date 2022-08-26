@@ -6,6 +6,7 @@ import java.time.LocalDate;
 
 public class ExpensesDto {
 
+
     private String description;
     private Double value;
 

@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,7 +18,12 @@ public class IncomeService {
     private IncomeRepository incomeRepository;
 
     @Transactional
-    public Income save(Income income){
+    public Income save(IncomeDto incomeDto){
+
+        Income income = new Income();
+        income.setDescription(incomeDto.getDescription());
+        income.setValue(incomeDto.getValue());
+        income.setDate(LocalDate.now());
         return incomeRepository.save(income);
 
     }
@@ -32,8 +36,20 @@ public class IncomeService {
         return incomeRepository.findById(id);
     }
 
-    public void delete(Long id) {
-        incomeRepository.deleteById(id);
+    @Transactional
+    public void delete(Income income){
+        incomeRepository.delete(income);
     }
 
+    public boolean existsByDescription(String description) {
+        return incomeRepository.existsByDescription(description);
+    }
+
+    public Income update(Long id, IncomeDto incomedto) {
+        Optional<Income> income = findById(id);
+        income.get().setDescription(incomedto.getDescription());
+        income.get().setValue(incomedto.getValue());
+        income.get().setDate(LocalDate.now());
+        return incomeRepository.save(income.get());
+    }
 }
