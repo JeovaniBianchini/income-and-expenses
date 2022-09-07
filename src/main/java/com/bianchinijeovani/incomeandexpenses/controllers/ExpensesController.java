@@ -24,7 +24,7 @@ public class ExpensesController {
     @PostMapping
     public ResponseEntity<Object> save(@RequestBody ExpensesDto dto){
 
-        if (expensesService.existsByDescription(dto.getDescription()) && expensesService.existsByDateBetween(LocalDate.now().with(TemporalAdjusters.firstDayOfMonth()), LocalDate.now().with(TemporalAdjusters.lastDayOfMonth()))){
+        if (expensesService.existsByDescriptionAndDateBetween(dto.getDescription(), LocalDate.now().with(TemporalAdjusters.firstDayOfMonth()), LocalDate.now().with(TemporalAdjusters.lastDayOfMonth()))){
             return ResponseEntity.status(HttpStatus.ALREADY_REPORTED).body("Expenses already exist");
         }
 

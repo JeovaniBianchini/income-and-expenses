@@ -49,8 +49,8 @@ public class ExpensesService {
         return expensesRepository.save(expenses.get());
     }
 
-    public boolean existsByDescription(String description){
-        return expensesRepository.existsByDescription(description);
+    public boolean existsByDescriptionAndDateBetween(String description, LocalDate start, LocalDate end){
+        return expensesRepository.existsByDescriptionAndDateBetween(description, start, end);
     }
 
     public boolean existsByDateBetween(LocalDate start, LocalDate end){

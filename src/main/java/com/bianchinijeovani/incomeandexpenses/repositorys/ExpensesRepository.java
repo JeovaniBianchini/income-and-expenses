@@ -10,7 +10,7 @@ import java.time.YearMonth;
 
 public interface ExpensesRepository extends JpaRepository<Expenses, Long> {
 
-    boolean existsByDescription(String description);
+    boolean existsByDescriptionAndDateBetween(String description, LocalDate start, LocalDate end);
 
 
     boolean existsByDateBetween(LocalDate start, LocalDate end);
