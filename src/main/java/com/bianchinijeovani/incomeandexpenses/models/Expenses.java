@@ -31,18 +31,19 @@ public class Expenses implements Serializable{
     private String description;
     @Column(name = "value")
     private Double value;
-
-
+    @Column(name = "category")
+    private String category;
 
 
     public Expenses(){
     }
 
-    public Expenses(Long id, String description, Double value, LocalDate date) {
+    public Expenses(Long id, String description, Double value, LocalDate date, String category) {
         this.id = id;
         this.description = description;
         this.value = value;
         this.date = date;
+        this.category = category;
     }
 
     public Long getId() {
@@ -77,7 +78,11 @@ public class Expenses implements Serializable{
         this.date = date;
     }
 
+    public String getCategory() {
+        return category;
+    }
 
-
-
+    public void setCategory(String category) {
+        this.category = category;
+    }
 }

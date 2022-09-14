@@ -4,6 +4,8 @@ import com.bianchinijeovani.incomeandexpenses.dtos.ExpensesDto;
 import com.bianchinijeovani.incomeandexpenses.models.Expenses;
 import com.bianchinijeovani.incomeandexpenses.services.ExpensesService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +15,7 @@ import java.time.chrono.ChronoLocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.*;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = "/expenses")
@@ -27,6 +30,9 @@ public class ExpensesController {
         if (expensesService.existsByDescriptionAndDateBetween(dto.getDescription(), LocalDate.now().with(TemporalAdjusters.firstDayOfMonth()), LocalDate.now().with(TemporalAdjusters.lastDayOfMonth()))){
             return ResponseEntity.status(HttpStatus.ALREADY_REPORTED).body("Expenses already exist");
         }
+        if (dto.getCategory() == null){
+            dto.setCategory("others");
+        }
 
         return ResponseEntity.status(HttpStatus.CREATED).body(expensesService.save(dto));
     }
@@ -34,6 +40,12 @@ public class ExpensesController {
     @GetMapping
     public ResponseEntity<List<Expenses>> findAll(){
         return ResponseEntity.status(HttpStatus.OK).body(expensesService.findAll());
+    }
+
+    @GetMapping(value = "/description")
+    public ResponseEntity<Page<Expenses>> findAllByDescription(@RequestParam String description, Pageable pageable){
+
+        return ResponseEntity.status(HttpStatus.OK).body(expensesService.findAllByDescription(description, pageable));
     }
 
     @GetMapping(value = "/{id}")

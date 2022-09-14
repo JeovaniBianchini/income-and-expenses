@@ -1,9 +1,12 @@
 package com.bianchinijeovani.incomeandexpenses.controllers;
 
 import com.bianchinijeovani.incomeandexpenses.dtos.IncomeDto;
+import com.bianchinijeovani.incomeandexpenses.models.Expenses;
 import com.bianchinijeovani.incomeandexpenses.models.Income;
 import com.bianchinijeovani.incomeandexpenses.services.IncomeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -33,6 +36,12 @@ public class IncomeController {
     @GetMapping
     public ResponseEntity<List<Income>> findAll(){
         return ResponseEntity.status(HttpStatus.OK).body(incomeService.findAll());
+    }
+
+    @GetMapping(value = "/description")
+    public ResponseEntity<Page<Income>> findAllByDescription(@RequestParam String description, Pageable pageable){
+
+        return ResponseEntity.status(HttpStatus.OK).body(incomeService.findAllByDescription(description, pageable));
     }
 
     @GetMapping(value = "/{id}")

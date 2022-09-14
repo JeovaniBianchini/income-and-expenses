@@ -4,6 +4,8 @@ import com.bianchinijeovani.incomeandexpenses.dtos.IncomeDto;
 import com.bianchinijeovani.incomeandexpenses.models.Income;
 import com.bianchinijeovani.incomeandexpenses.repositorys.IncomeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -51,5 +53,9 @@ public class IncomeService {
         income.get().setValue(incomedto.getValue());
         income.get().setDate(LocalDate.now());
         return incomeRepository.save(income.get());
+    }
+
+    public Page<Income> findAllByDescription(String description, Pageable pageable) {
+        return incomeRepository.findAllByDescription(description, pageable);
     }
 }

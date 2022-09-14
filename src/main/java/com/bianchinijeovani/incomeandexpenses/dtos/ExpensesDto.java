@@ -9,15 +9,20 @@ public class ExpensesDto {
 
     private String description;
     private Double value;
+    private String category;
 
-    public ExpensesDto(String description, Double value) {
+
+
+    public ExpensesDto(String description, Double value, String category) {
         this.description = description;
         this.value = value;
+        this.category = category;
     }
 
     public ExpensesDto(Expenses expense) {
         description = expense.getDescription();
         value = expense.getValue();
+        category = expense.getCategory();
 
     }
 
@@ -38,4 +43,11 @@ public class ExpensesDto {
         this.value = value;
     }
 
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
 }
