@@ -1,7 +1,12 @@
 package com.bianchinijeovani.incomeandexpenses.controllers;
 
+import com.bianchinijeovani.incomeandexpenses.dtos.CategoryDto;
 import com.bianchinijeovani.incomeandexpenses.dtos.ExpensesDto;
+import com.bianchinijeovani.incomeandexpenses.models.Category;
 import com.bianchinijeovani.incomeandexpenses.models.Expenses;
+import com.bianchinijeovani.incomeandexpenses.models.Income;
+
+import com.bianchinijeovani.incomeandexpenses.services.CategoryService;
 import com.bianchinijeovani.incomeandexpenses.services.ExpensesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -24,17 +29,21 @@ public class ExpensesController {
     @Autowired
     private ExpensesService expensesService;
 
-    @PostMapping
-    public ResponseEntity<Object> save(@RequestBody ExpensesDto dto){
+    @Autowired
+    private CategoryService categoryService;
 
-        if (expensesService.existsByDescriptionAndDateBetween(dto.getDescription(), LocalDate.now().with(TemporalAdjusters.firstDayOfMonth()), LocalDate.now().with(TemporalAdjusters.lastDayOfMonth()))){
+
+
+    @PostMapping
+    public ResponseEntity<Object> save(@RequestBody ExpensesDto expensesdto){
+
+
+        if (expensesService.existsByDescriptionAndDateBetween(expensesdto.getDescription(), LocalDate.now().with(TemporalAdjusters.firstDayOfMonth()), LocalDate.now().with(TemporalAdjusters.lastDayOfMonth()))){
             return ResponseEntity.status(HttpStatus.ALREADY_REPORTED).body("Expenses already exist");
         }
-        if (dto.getCategory() == null){
-            dto.setCategory("others");
-        }
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(expensesService.save(dto));
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(expensesService.save(expensesdto));
     }
 
     @GetMapping
@@ -46,6 +55,11 @@ public class ExpensesController {
     public ResponseEntity<Page<Expenses>> findAllByDescription(@RequestParam String description, Pageable pageable){
 
         return ResponseEntity.status(HttpStatus.OK).body(expensesService.findAllByDescription(description, pageable));
+    }
+
+    @GetMapping(value = "/{year}/{month}")
+    public ResponseEntity<Page<Expenses>> findByDate(@PathVariable(value = "year") int year, @PathVariable(value = "month") int month, Pageable pageable){
+        return ResponseEntity.status(HttpStatus.OK).body(expensesService.findByDate(year, month, pageable));
     }
 
     @GetMapping(value = "/{id}")

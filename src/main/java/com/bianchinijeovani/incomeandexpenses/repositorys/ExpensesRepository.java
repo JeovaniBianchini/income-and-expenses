@@ -1,6 +1,8 @@
 package com.bianchinijeovani.incomeandexpenses.repositorys;
 
+import com.bianchinijeovani.incomeandexpenses.models.Category;
 import com.bianchinijeovani.incomeandexpenses.models.Expenses;
+import com.bianchinijeovani.incomeandexpenses.models.Income;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -22,4 +24,12 @@ public interface ExpensesRepository extends JpaRepository<Expenses, Long> {
     String findByDescription(String description);
 
     boolean existsByDescription(String description);
+
+    Page<Expenses> findByDate(LocalDate localDate, Pageable pageable);
+
+    List<Expenses> findAllByDate(LocalDate localDate);
+
+    Optional<Category> findByCategory(Category category);
+
+
 }

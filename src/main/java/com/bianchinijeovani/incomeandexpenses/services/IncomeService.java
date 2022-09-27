@@ -10,6 +10,10 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.time.LocalDate;
+import java.time.YearMonth;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAccessor;
+import java.time.temporal.TemporalAdjusters;
 import java.util.List;
 import java.util.Optional;
 
@@ -57,5 +61,12 @@ public class IncomeService {
 
     public Page<Income> findAllByDescription(String description, Pageable pageable) {
         return incomeRepository.findAllByDescription(description, pageable);
+    }
+
+    public Page<Income> findByDate(int year, int month,  Pageable pageable){
+
+        LocalDate localDate = LocalDate.of(year, month, LocalDate.now().getDayOfMonth());
+        return  incomeRepository.findByDate(localDate, pageable);
+
     }
 }

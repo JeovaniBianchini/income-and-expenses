@@ -1,8 +1,13 @@
 package com.bianchinijeovani.incomeandexpenses.services;
 
+import com.bianchinijeovani.incomeandexpenses.dtos.CategoryDto;
 import com.bianchinijeovani.incomeandexpenses.dtos.ExpensesDto;
+import com.bianchinijeovani.incomeandexpenses.models.Category;
 import com.bianchinijeovani.incomeandexpenses.models.Expenses;
+import com.bianchinijeovani.incomeandexpenses.models.Income;
+import com.bianchinijeovani.incomeandexpenses.repositorys.CategoryRepository;
 import com.bianchinijeovani.incomeandexpenses.repositorys.ExpensesRepository;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,17 +23,30 @@ public class ExpensesService {
     @Autowired
     private ExpensesRepository expensesRepository;
 
+    @Autowired
+    private CategoryRepository categoryRepository;
+
+    @Autowired
+    private CategoryService categoryService;
+
 
     @Transactional
     public Expenses save(ExpensesDto expensesDto){
-
+        Category category = categoryRepository.findByName(expensesDto.getCategory().getName());
+        
 
         Expenses expenses = new Expenses();
         expenses.setDescription(expensesDto.getDescription());
         expenses.setValue(expensesDto.getValue());
         expenses.setDate(LocalDate.now());
-        expenses.setCategory(expensesDto.getCategory());
+        expenses.setCategory(category);
+
         return expensesRepository.save(expenses);
+
+
+
+
+
 
     }
 
@@ -49,12 +67,14 @@ public class ExpensesService {
         expensesRepository.delete(expenses);
     }
 
-    public Expenses update(Long id, ExpensesDto obj){
+    public Expenses update(Long id, ExpensesDto expensesDto){
         Optional<Expenses> expenses = findById(id);
-        expenses.get().setDescription(obj.getDescription());
-        expenses.get().setValue(obj.getValue());
+
+
+        expenses.get().setDescription(expensesDto.getDescription());
+        expenses.get().setValue(expensesDto.getValue());
         expenses.get().setDate(LocalDate.now());
-        expenses.get().setCategory(obj.getCategory());
+
         return expensesRepository.save(expenses.get());
     }
 
@@ -71,6 +91,15 @@ public class ExpensesService {
 
         return expensesRepository.existsByDescription(description);
     }
+
+    public Page<Expenses> findByDate(int year, int month, Pageable pageable){
+
+        LocalDate localDate = LocalDate.of(year, month, LocalDate.now().getDayOfMonth());
+        return  expensesRepository.findByDate(localDate, pageable);
+
+    }
+
+
 
 
 

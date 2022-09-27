@@ -7,6 +7,7 @@ import com.bianchinijeovani.incomeandexpenses.services.IncomeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -39,9 +40,13 @@ public class IncomeController {
     }
 
     @GetMapping(value = "/description")
-    public ResponseEntity<Page<Income>> findAllByDescription(@RequestParam String description, Pageable pageable){
-
+    public ResponseEntity<Page<Income>> findAllByDescription(@RequestParam(defaultValue = " ") String description, Pageable pageable){
         return ResponseEntity.status(HttpStatus.OK).body(incomeService.findAllByDescription(description, pageable));
+    }
+
+    @GetMapping(value = "/{year}/{month}")
+    public ResponseEntity<Page<Income>> findByDate(@PathVariable(value = "year") int year, @PathVariable(value = "month") int month, Pageable pageable){
+        return ResponseEntity.status(HttpStatus.OK).body(incomeService.findByDate(year, month, pageable));
     }
 
     @GetMapping(value = "/{id}")

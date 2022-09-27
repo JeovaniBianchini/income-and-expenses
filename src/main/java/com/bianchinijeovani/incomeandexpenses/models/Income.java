@@ -63,4 +63,12 @@ public class Income {
     public void setDate(LocalDate date) {
         this.date = date;
     }
+
+    public Double getTotal(){
+        Double total = 0.0;
+        value = value + total;
+        return value;
+    }
 }
+
+

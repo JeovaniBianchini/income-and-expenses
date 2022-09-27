@@ -1,19 +1,21 @@
 package com.bianchinijeovani.incomeandexpenses.dtos;
 
+import com.bianchinijeovani.incomeandexpenses.models.Category;
 import com.bianchinijeovani.incomeandexpenses.models.Expenses;
 
 import java.time.LocalDate;
+import java.util.stream.Collectors;
 
 public class ExpensesDto {
 
 
     private String description;
     private Double value;
-    private String category;
+    private Category category;
 
 
 
-    public ExpensesDto(String description, Double value, String category) {
+    public ExpensesDto(String description, Double value, Category category) {
         this.description = description;
         this.value = value;
         this.category = category;
@@ -43,11 +45,11 @@ public class ExpensesDto {
         this.value = value;
     }
 
-    public String getCategory() {
+    public Category getCategory() {
         return category;
     }
 
-    public void setCategory(String category) {
+    public void setCategory(Category category) {
         this.category = category;
     }
 }

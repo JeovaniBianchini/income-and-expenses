@@ -1,6 +1,7 @@
 package com.bianchinijeovani.incomeandexpenses.models;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import net.bytebuddy.asm.Advice;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -31,14 +32,17 @@ public class Expenses implements Serializable{
     private String description;
     @Column(name = "value")
     private Double value;
-    @Column(name = "category")
-    private String category;
+
+
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
 
 
     public Expenses(){
     }
 
-    public Expenses(Long id, String description, Double value, LocalDate date, String category) {
+    public Expenses(Long id, String description, Double value, LocalDate date, Category category) {
         this.id = id;
         this.description = description;
         this.value = value;
@@ -78,11 +82,13 @@ public class Expenses implements Serializable{
         this.date = date;
     }
 
-    public String getCategory() {
+    public Category getCategory() {
         return category;
     }
 
-    public void setCategory(String category) {
+    public void setCategory(Category category) {
         this.category = category;
     }
+
+
 }
