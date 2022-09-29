@@ -31,9 +31,13 @@ public class ExpensesService {
 
 
     @Transactional
-    public Expenses save(ExpensesDto expensesDto){
+    public Object save(ExpensesDto expensesDto){
+
+        if (expensesDto.getCategory() == null){
+            expensesDto.setCategory(categoryRepository.findByName("others"));
+        }
         Category category = categoryRepository.findByName(expensesDto.getCategory().getName());
-        
+
 
         Expenses expenses = new Expenses();
         expenses.setDescription(expensesDto.getDescription());
@@ -42,12 +46,6 @@ public class ExpensesService {
         expenses.setCategory(category);
 
         return expensesRepository.save(expenses);
-
-
-
-
-
-
     }
 
     public List<Expenses> findAll(){

@@ -2,10 +2,14 @@ package com.bianchinijeovani.incomeandexpenses.models;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import net.bytebuddy.asm.Advice;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.Instant;
 import java.time.LocalDate;
@@ -27,11 +31,13 @@ public class Expenses implements Serializable{
     @Column(name = "date")
     private LocalDate date;
 
-
+    @NotNull
     @Column(name = "description")
     private String description;
+    @NotNull
     @Column(name = "value")
     private Double value;
+
 
 
     @ManyToOne
@@ -82,9 +88,11 @@ public class Expenses implements Serializable{
         this.date = date;
     }
 
+
     public Category getCategory() {
         return category;
     }
+
 
     public void setCategory(Category category) {
         this.category = category;

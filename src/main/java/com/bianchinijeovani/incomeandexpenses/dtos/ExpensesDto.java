@@ -2,6 +2,7 @@ package com.bianchinijeovani.incomeandexpenses.dtos;
 
 import com.bianchinijeovani.incomeandexpenses.models.Category;
 import com.bianchinijeovani.incomeandexpenses.models.Expenses;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.time.LocalDate;
 import java.util.stream.Collectors;

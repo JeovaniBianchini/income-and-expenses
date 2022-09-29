@@ -8,6 +8,7 @@ import com.bianchinijeovani.incomeandexpenses.models.Income;
 
 import com.bianchinijeovani.incomeandexpenses.services.CategoryService;
 import com.bianchinijeovani.incomeandexpenses.services.ExpensesService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,6 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.time.*;
 import java.time.chrono.ChronoLocalDate;
 import java.time.format.DateTimeFormatter;
@@ -35,7 +37,7 @@ public class ExpensesController {
 
 
     @PostMapping
-    public ResponseEntity<Object> save(@RequestBody ExpensesDto expensesdto){
+    public ResponseEntity<Object> save(@Valid @RequestBody ExpensesDto expensesdto){
 
 
         if (expensesService.existsByDescriptionAndDateBetween(expensesdto.getDescription(), LocalDate.now().with(TemporalAdjusters.firstDayOfMonth()), LocalDate.now().with(TemporalAdjusters.lastDayOfMonth()))){
