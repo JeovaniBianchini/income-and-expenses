@@ -1,22 +1,39 @@
 package com.bianchinijeovani.incomeandexpenses.models;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import net.bytebuddy.asm.Advice;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
+import java.io.Serializable;
+import java.time.Instant;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.Month;
+import java.util.Calendar;
 
 @Entity
 @Table(name = "tb_expenses")
-public class Expenses {
+public class Expenses implements Serializable{
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
+
+
+    @Column(name = "date")
+    private LocalDate date;
+
+
     @Column(name = "description")
     private String description;
     @Column(name = "value")
     private Double value;
-    @Column(name = "date")
-    private LocalDate date;
+
+
+
 
     public Expenses(){
     }
@@ -59,4 +76,8 @@ public class Expenses {
     public void setDate(LocalDate date) {
         this.date = date;
     }
+
+
+
+
 }

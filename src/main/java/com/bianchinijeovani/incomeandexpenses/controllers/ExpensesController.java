@@ -8,8 +8,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.Optional;
+import java.time.*;
+import java.time.chrono.ChronoLocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.*;
+import java.util.*;
 
 @RestController
 @RequestMapping(value = "/expenses")
@@ -21,7 +24,7 @@ public class ExpensesController {
     @PostMapping
     public ResponseEntity<Object> save(@RequestBody ExpensesDto dto){
 
-        if (expensesService.existsByDescription(dto.getDescription())){
+        if (expensesService.existsByDescription(dto.getDescription()) && expensesService.existsByDateBetween(LocalDate.now().with(TemporalAdjusters.firstDayOfMonth()), LocalDate.now().with(TemporalAdjusters.lastDayOfMonth()))){
             return ResponseEntity.status(HttpStatus.ALREADY_REPORTED).body("Expenses already exist");
         }
 

@@ -18,6 +18,7 @@ public class ExpensesDto {
     public ExpensesDto(Expenses expense) {
         description = expense.getDescription();
         value = expense.getValue();
+
     }
 
 
