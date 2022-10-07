@@ -41,8 +41,8 @@ public class IncomeService {
         incomeRepository.delete(income);
     }
 
-    public boolean existsByDescription(String description) {
-        return incomeRepository.existsByDescription(description);
+    public boolean existsByDescriptionAndDateBetween(String description, LocalDate start, LocalDate end) {
+        return incomeRepository.existsByDescriptionAndDateBetween(description, start, end);
     }
 
     public Income update(Long id, IncomeDto incomedto) {

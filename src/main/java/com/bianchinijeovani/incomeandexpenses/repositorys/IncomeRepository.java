@@ -3,7 +3,9 @@ package com.bianchinijeovani.incomeandexpenses.repositorys;
 import com.bianchinijeovani.incomeandexpenses.models.Income;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.time.LocalDate;
+
 public interface IncomeRepository extends JpaRepository<Income, Long> {
 
-    boolean existsByDescription(String description);
+    boolean existsByDescriptionAndDateBetween(String description, LocalDate start, LocalDate end);
 }

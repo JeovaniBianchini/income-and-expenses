@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.time.temporal.TemporalAdjusters;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,7 +23,7 @@ public class IncomeController {
     @PostMapping
     public ResponseEntity<Object> save(@RequestBody  IncomeDto dto){
 
-        if (incomeService.existsByDescription(dto.getDescription())){
+        if (incomeService.existsByDescriptionAndDateBetween(dto.getDescription(), LocalDate.now().with(TemporalAdjusters.firstDayOfMonth()), LocalDate.now().with(TemporalAdjusters.lastDayOfMonth()))){
             return ResponseEntity.status(HttpStatus.ALREADY_REPORTED).body("Income already exist");
         }
 
