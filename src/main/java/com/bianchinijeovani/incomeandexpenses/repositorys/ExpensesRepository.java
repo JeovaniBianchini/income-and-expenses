@@ -19,7 +19,6 @@ public interface ExpensesRepository extends JpaRepository<Expenses, Long> {
 
     boolean existsByDescriptionAndDateBetween(String description, LocalDate start, LocalDate end);
 
-
     Page<Expenses> findAllByDescription(String description, Pageable pageable);
 
     String findByDescription(String description);
@@ -30,10 +29,4 @@ public interface ExpensesRepository extends JpaRepository<Expenses, Long> {
 
     @Query("SELECT SUM(m.value) FROM Expenses m WHERE m.date = :localDate")
     Double getTotalValue(@Param("localDate") LocalDate localDate);
-
-
-
-
-
-
 }

@@ -26,15 +26,13 @@ public class ExpensesService {
     @Autowired
     private CategoryService categoryService;
 
-
     @Transactional
     public Object save(ExpensesDto expensesDto){
 
         if (expensesDto.getCategory() == null){
-            expensesDto.setCategory(categoryRepository.findByName("others"));
+            expensesDto.setCategory(categoryRepository.findByName("Others"));
         }
         Category category = categoryRepository.findByName(expensesDto.getCategory().getName());
-
 
         Expenses expenses = new Expenses();
         expenses.setDescription(expensesDto.getDescription());
@@ -81,21 +79,13 @@ public class ExpensesService {
         return expensesRepository.findByDescription(description);
     }
 
-    public boolean existsByDescription(String description){
-
-
-        return expensesRepository.existsByDescription(description);
-    }
-
     public Page<Expenses> findByDate(int year, int month, Pageable pageable){
 
         LocalDate localDate = LocalDate.of(year, month, LocalDate.now().getDayOfMonth());
         return  expensesRepository.findByDate(localDate, pageable);
-
     }
 
     public Double getTotalValue(LocalDate localDate){
-
         return expensesRepository.getTotalValue(localDate);
     }
 

@@ -14,6 +14,8 @@ public interface CategoryRepository extends JpaRepository<Category, Long > {
 
     Category findByName(String name);
 
+    boolean existsByName(String name);
+
     @Query("SELECT NEW com.bianchinijeovani.incomeandexpenses.dtos.CategoryDto(c.name, SUM(e.value)) FROM Category c INNER JOIN c.expenses e WHERE e.date = :localDate GROUP BY c.name")
     List<CategoryDto> getTotalValueExpenses(@Param("localDate")LocalDate localDate);
 

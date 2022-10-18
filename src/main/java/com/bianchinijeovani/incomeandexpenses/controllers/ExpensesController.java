@@ -28,16 +28,12 @@ public class ExpensesController {
     @Autowired
     private CategoryService categoryService;
 
-
-
     @PostMapping
     public ResponseEntity<Object> save(@Valid @RequestBody ExpensesDto expensesdto){
-
 
         if (expensesService.existsByDescriptionAndDateBetween(expensesdto.getDescription(), LocalDate.now().with(TemporalAdjusters.firstDayOfMonth()), LocalDate.now().with(TemporalAdjusters.lastDayOfMonth()))){
             return ResponseEntity.status(HttpStatus.ALREADY_REPORTED).body("Expenses already exist");
         }
-
 
         return ResponseEntity.status(HttpStatus.CREATED).body(expensesService.save(expensesdto));
     }
@@ -86,8 +82,5 @@ public class ExpensesController {
 
         Expenses expenses = expensesService.update(id, dto);
         return ResponseEntity.status(HttpStatus.OK).body(expenses);
-
     }
-
-
 }

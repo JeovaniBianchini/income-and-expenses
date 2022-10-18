@@ -7,8 +7,10 @@ import com.bianchinijeovani.incomeandexpenses.repositorys.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CategoryService {
@@ -34,9 +36,17 @@ public class CategoryService {
         return categoryRepository.getTotalValueExpenses(localDate);
     }
 
+    public boolean existsByName(String name){
+        return categoryRepository.existsByName(name);
+    }
+
+    @Transactional
+    public void delete(Category category){
+        categoryRepository.delete(category);
+    }
 
 
-
-
-
+    public Optional<Category> findById(Long id) {
+        return categoryRepository.findById(id);
+    }
 }
