@@ -42,6 +42,10 @@ public class Expenses implements Serializable{
     @JoinColumn(name = "category_id")
     private Category category;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
 
     public Expenses(){
     }
@@ -96,8 +100,11 @@ public class Expenses implements Serializable{
         this.category = category;
     }
 
+    public User getUser() {
+        return user;
+    }
 
-
-
-
+    public void setUser(User user) {
+        this.user = user;
+    }
 }

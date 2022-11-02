@@ -29,4 +29,8 @@ public interface ExpensesRepository extends JpaRepository<Expenses, Long> {
 
     @Query("SELECT SUM(m.value) FROM Expenses m WHERE m.date = :localDate")
     Double getTotalValue(@Param("localDate") LocalDate localDate);
+
+
+
+
 }

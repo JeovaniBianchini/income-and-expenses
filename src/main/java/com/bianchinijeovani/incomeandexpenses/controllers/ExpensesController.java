@@ -1,8 +1,11 @@
 package com.bianchinijeovani.incomeandexpenses.controllers;
 
 import com.bianchinijeovani.incomeandexpenses.dtos.ExpensesDto;
+import com.bianchinijeovani.incomeandexpenses.dtos.UserDto;
+import com.bianchinijeovani.incomeandexpenses.dtos.UserForm;
 import com.bianchinijeovani.incomeandexpenses.models.Expenses;
 
+import com.bianchinijeovani.incomeandexpenses.models.User;
 import com.bianchinijeovani.incomeandexpenses.services.CategoryService;
 import com.bianchinijeovani.incomeandexpenses.services.ExpensesService;
 
@@ -11,6 +14,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -29,13 +34,13 @@ public class ExpensesController {
     private CategoryService categoryService;
 
     @PostMapping
-    public ResponseEntity<Object> save(@Valid @RequestBody ExpensesDto expensesdto){
+    public ResponseEntity<Object> save(@Valid @RequestBody ExpensesDto expensesdto, @AuthenticationPrincipal UserDetails user){
 
         if (expensesService.existsByDescriptionAndDateBetween(expensesdto.getDescription(), LocalDate.now().with(TemporalAdjusters.firstDayOfMonth()), LocalDate.now().with(TemporalAdjusters.lastDayOfMonth()))){
             return ResponseEntity.status(HttpStatus.ALREADY_REPORTED).body("Expenses already exist");
         }
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(expensesService.save(expensesdto));
+        return ResponseEntity.status(HttpStatus.CREATED).body(expensesService.save(expensesdto, user));
     }
 
     @GetMapping

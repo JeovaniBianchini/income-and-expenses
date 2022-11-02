@@ -1,5 +1,7 @@
 package com.bianchinijeovani.incomeandexpenses.services;
 
+import com.bianchinijeovani.incomeandexpenses.models.User;
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.security.core.Authentication;
@@ -17,12 +19,14 @@ public class AuthenticationService {
     static final String PREFIX = "Bearer";
 
     static public void addToken(HttpServletResponse res, String username) {
-        String JwtToken = Jwts.builder().setSubject(username)
+        String JwtToke = Jwts.builder().setSubject(username)
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRATIONTIME))
                 .signWith(SignatureAlgorithm.HS512, SIGNINGKEY)
                 .compact();
-        res.addHeader("Authorization", PREFIX + " " + JwtToken);
-        res.addHeader("Access-Control-Expose-Headers", "Authorization");
+        res.addHeader("Authorization", PREFIX + " " + JwtToke);
+        res.addHeader("Access-Control-Expose_headers", "Authorization");
+
+
     }
 
     static public Authentication getAuthentication(HttpServletRequest request) {

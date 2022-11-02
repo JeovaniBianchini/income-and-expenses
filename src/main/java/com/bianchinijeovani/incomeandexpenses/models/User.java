@@ -5,6 +5,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -19,6 +20,9 @@ public class User implements Serializable, UserDetails {
     private String userName;
     @Column(nullable = false)
     private String passWord;
+
+    @OneToMany(mappedBy = "user")
+    private List<Expenses> listExpenses = new ArrayList<>();
 
 
     @Override
@@ -79,4 +83,13 @@ public class User implements Serializable, UserDetails {
     public void setPassWord(String passWord) {
         this.passWord = passWord;
     }
+
+    public List<Expenses> getListExpenses() {
+        return listExpenses;
+    }
+
+    public void setListExpenses(List<Expenses> listExpenses) {
+        this.listExpenses = listExpenses;
+    }
+
 }
