@@ -69,4 +69,9 @@ public class IncomeService {
         return  incomeRepository.findByDate(localDate, pageable);
 
     }
+
+    public Double getTotalValue(LocalDate localDate){
+
+        return incomeRepository.getTotalValue(localDate);
+    }
 }

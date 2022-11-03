@@ -1,5 +1,6 @@
 package com.bianchinijeovani.incomeandexpenses.controllers;
 
+import com.bianchinijeovani.incomeandexpenses.models.Income;
 import com.bianchinijeovani.incomeandexpenses.services.ExpensesService;
 import com.bianchinijeovani.incomeandexpenses.services.IncomeService;
 import com.bianchinijeovani.incomeandexpenses.services.SummaryTotalOfMonthService;
@@ -22,7 +23,9 @@ public class SummaryTotalOfMonthController {
     @Autowired
     private SummaryTotalOfMonthService summaryTotalOfMonthService;
 
-
-
+    @GetMapping(value = "/{year}/{month}")
+    public ResponseEntity<Object> getSummaryTotal(@PathVariable(value = "year") int year, @PathVariable(value = "month") int month){
+        return ResponseEntity.status(HttpStatus.OK).body(summaryTotalOfMonthService.getSummaryTotal(year, month));
+    }
 
 }

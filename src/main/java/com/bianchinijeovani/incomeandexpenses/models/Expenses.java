@@ -16,6 +16,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Month;
 import java.util.Calendar;
+import java.util.List;
 
 @Entity
 @Table(name = "tb_expenses")
@@ -27,7 +28,6 @@ public class Expenses implements Serializable{
     @Column(name = "id")
     private Long id;
 
-
     @Column(name = "date")
     private LocalDate date;
 
@@ -37,8 +37,6 @@ public class Expenses implements Serializable{
     @NotNull
     @Column(name = "value")
     private Double value;
-
-
 
     @ManyToOne
     @JoinColumn(name = "category_id")
@@ -97,6 +95,9 @@ public class Expenses implements Serializable{
     public void setCategory(Category category) {
         this.category = category;
     }
+
+
+
 
 
 }

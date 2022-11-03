@@ -1,13 +1,14 @@
 package com.bianchinijeovani.incomeandexpenses.services;
 
 import com.bianchinijeovani.incomeandexpenses.dtos.CategoryDto;
+import com.bianchinijeovani.incomeandexpenses.dtos.CategoryForm;
 import com.bianchinijeovani.incomeandexpenses.models.Category;
 import com.bianchinijeovani.incomeandexpenses.repositorys.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class CategoryService {
@@ -15,10 +16,10 @@ public class CategoryService {
     @Autowired
     private CategoryRepository categoryRepository;
 
-    public Category save(CategoryDto categoryDto){
+    public Category save(CategoryForm categoryForm){
 
         Category category = new Category();
-        category.setName(categoryDto.getName());
+        category.setName(categoryForm.getName());
         return categoryRepository.save(category);
     }
     public Category findByName(String name){
@@ -29,7 +30,13 @@ public class CategoryService {
         return categoryRepository.findAll();
     }
 
-    public boolean existsByName(String name){
-        return categoryRepository.existsByName(name);
+    public List<CategoryDto> getTotalValueExpenses(LocalDate localDate){
+        return categoryRepository.getTotalValueExpenses(localDate);
     }
+
+
+
+
+
+
 }

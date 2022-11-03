@@ -1,10 +1,7 @@
 package com.bianchinijeovani.incomeandexpenses.controllers;
 
-import com.bianchinijeovani.incomeandexpenses.dtos.CategoryDto;
 import com.bianchinijeovani.incomeandexpenses.dtos.ExpensesDto;
-import com.bianchinijeovani.incomeandexpenses.models.Category;
 import com.bianchinijeovani.incomeandexpenses.models.Expenses;
-import com.bianchinijeovani.incomeandexpenses.models.Income;
 
 import com.bianchinijeovani.incomeandexpenses.services.CategoryService;
 import com.bianchinijeovani.incomeandexpenses.services.ExpensesService;
@@ -18,11 +15,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.time.*;
-import java.time.chrono.ChronoLocalDate;
-import java.time.format.DateTimeFormatter;
 import java.time.temporal.*;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = "/expenses")

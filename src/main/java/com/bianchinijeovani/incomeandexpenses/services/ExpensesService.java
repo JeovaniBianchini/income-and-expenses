@@ -1,13 +1,10 @@
 package com.bianchinijeovani.incomeandexpenses.services;
 
-import com.bianchinijeovani.incomeandexpenses.dtos.CategoryDto;
 import com.bianchinijeovani.incomeandexpenses.dtos.ExpensesDto;
 import com.bianchinijeovani.incomeandexpenses.models.Category;
 import com.bianchinijeovani.incomeandexpenses.models.Expenses;
-import com.bianchinijeovani.incomeandexpenses.models.Income;
 import com.bianchinijeovani.incomeandexpenses.repositorys.CategoryRepository;
 import com.bianchinijeovani.incomeandexpenses.repositorys.ExpensesRepository;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -68,10 +65,10 @@ public class ExpensesService {
     public Expenses update(Long id, ExpensesDto expensesDto){
         Optional<Expenses> expenses = findById(id);
 
-
         expenses.get().setDescription(expensesDto.getDescription());
         expenses.get().setValue(expensesDto.getValue());
         expenses.get().setDate(LocalDate.now());
+        expenses.get().setCategory(categoryRepository.findByName(expensesDto.getCategory().getName()));
 
         return expensesRepository.save(expenses.get());
     }
@@ -96,6 +93,13 @@ public class ExpensesService {
         return  expensesRepository.findByDate(localDate, pageable);
 
     }
+
+    public Double getTotalValue(LocalDate localDate){
+
+        return expensesRepository.getTotalValue(localDate);
+    }
+
+
 
 
 

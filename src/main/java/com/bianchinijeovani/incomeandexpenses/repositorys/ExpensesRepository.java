@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.time.LocalDate;
 import java.time.YearMonth;
@@ -27,9 +28,12 @@ public interface ExpensesRepository extends JpaRepository<Expenses, Long> {
 
     Page<Expenses> findByDate(LocalDate localDate, Pageable pageable);
 
-    List<Expenses> findAllByDate(LocalDate localDate);
+    @Query("SELECT SUM(m.value) FROM Expenses m WHERE m.date = :localDate")
+    Double getTotalValue(@Param("localDate") LocalDate localDate);
 
-    Optional<Category> findByCategory(Category category);
+
+
+
 
 
 }

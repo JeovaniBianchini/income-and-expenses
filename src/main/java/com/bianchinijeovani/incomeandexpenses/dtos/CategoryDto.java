@@ -1,20 +1,16 @@
 package com.bianchinijeovani.incomeandexpenses.dtos;
 
-import com.bianchinijeovani.incomeandexpenses.models.Category;
-
 public class CategoryDto {
 
     private String name;
+    private Double value;
 
     public CategoryDto(){
     }
 
-    public CategoryDto(String name) {
+    public CategoryDto(String name, Double value) {
         this.name = name;
-    }
-
-    public CategoryDto(Category category) {
-        name = category.getName();
+        this.value = value;
     }
 
     public String getName() {
@@ -23,5 +19,13 @@ public class CategoryDto {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Double getValue() {
+        return value;
+    }
+
+    public void setValue(Double value) {
+        this.value = value;
     }
 }

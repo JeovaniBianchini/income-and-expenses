@@ -4,12 +4,13 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 @Entity
 @Table(name = "tb_income")
-public class Income {
+public class Income implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -64,11 +65,6 @@ public class Income {
         this.date = date;
     }
 
-    public Double getTotal(){
-        Double total = 0.0;
-        value = value + total;
-        return value;
-    }
 }
 
 

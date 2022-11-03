@@ -1,32 +1,53 @@
 package com.bianchinijeovani.incomeandexpenses.services;
 
+import com.bianchinijeovani.incomeandexpenses.dtos.CategoryDto;
+import com.bianchinijeovani.incomeandexpenses.dtos.SummaryTotalOfMonthDto;
+import com.bianchinijeovani.incomeandexpenses.models.Category;
 import com.bianchinijeovani.incomeandexpenses.models.Expenses;
-import com.bianchinijeovani.incomeandexpenses.models.Income;
-import com.bianchinijeovani.incomeandexpenses.repositorys.ExpensesRepository;
-import com.bianchinijeovani.incomeandexpenses.repositorys.IncomeRepository;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class SummaryTotalOfMonthService {
 
     @Autowired
-    private IncomeRepository incomeRepository;
+    private IncomeService incomeService;
 
     @Autowired
-    private ExpensesRepository expensesRepository;
+    private ExpensesService expensesService;
+    
+    @Autowired
+    private CategoryService categoryService;
 
 
 
 
+    public Object getSummaryTotal(int year, int month) {
+        SummaryTotalOfMonthDto summaryTotalOfMonthDto = new SummaryTotalOfMonthDto();
+
+        LocalDate localDate = LocalDate.of(year, month, LocalDate.now().getDayOfMonth());
+        Double expenses = expensesService.getTotalValue(localDate);
+        Double income = incomeService.getTotalValue(localDate);
+        List<CategoryDto> list = categoryService.getTotalValueExpenses(localDate);
 
 
+
+
+        summaryTotalOfMonthDto.setTotalExpenses(String.valueOf(expenses));
+        summaryTotalOfMonthDto.setTotalIncomes(String.valueOf(income));
+        summaryTotalOfMonthDto.setTotalFinal(String.valueOf(income - expenses));
+        summaryTotalOfMonthDto.setTotalByCategorys(list);
+
+        return summaryTotalOfMonthDto;
+
+
+    }
 }

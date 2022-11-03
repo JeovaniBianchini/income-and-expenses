@@ -3,13 +3,14 @@ package com.bianchinijeovani.incomeandexpenses.models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @Entity
 @Table(name = "tb_category")
-public class Category {
+public class Category implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,8 +18,7 @@ public class Category {
     private String name;
 
     @JsonIgnore
-    @OneToMany
-    @JoinColumn(name = "expenses_id")
+    @OneToMany(mappedBy = "category")
     private List<Expenses> expenses = new ArrayList<>();
 
 
@@ -48,5 +48,11 @@ public class Category {
         this.name = name;
     }
 
+    public List<Expenses> getExpenses() {
+        return expenses;
+    }
 
+    public void setExpenses(List<Expenses> expenses) {
+        this.expenses = expenses;
+    }
 }
