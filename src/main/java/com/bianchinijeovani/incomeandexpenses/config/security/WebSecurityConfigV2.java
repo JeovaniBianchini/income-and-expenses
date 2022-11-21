@@ -27,7 +27,7 @@ public class WebSecurityConfigV2 {
                 .and()
                 .csrf().disable()
                 .authorizeHttpRequests()
-                .antMatchers("/user/**", "/h2-console/**", "/login").permitAll()
+                .antMatchers("/user/**", "/h2-console/**", "/login", "/logout").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .addFilterBefore(new LoginFilter("/login", configuration.getAuthenticationManager()), UsernamePasswordAuthenticationFilter.class)

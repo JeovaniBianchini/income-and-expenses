@@ -1,23 +1,33 @@
 package com.bianchinijeovani.incomeandexpenses.dtos;
 
+import com.bianchinijeovani.incomeandexpenses.models.User;
+
+import java.util.Optional;
+import java.util.UUID;
+
 public class UserDto {
 
-    private Long id;
+    private UUID id;
     private String userName;
 
     public UserDto(){
     }
 
-    public UserDto(Long id, String userName) {
+    public UserDto(UUID id, String userName) {
         this.id = id;
         this.userName = userName;
     }
 
-    public Long getId() {
+    public UserDto(User user) {
+        id = user.getId();
+        userName = user.getUserName();
+    }
+
+    public UUID getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 

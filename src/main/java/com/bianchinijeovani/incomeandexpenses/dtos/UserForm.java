@@ -1,5 +1,7 @@
 package com.bianchinijeovani.incomeandexpenses.dtos;
 
+import com.bianchinijeovani.incomeandexpenses.models.User;
+
 public class UserForm {
 
     private String userName;
@@ -11,6 +13,11 @@ public class UserForm {
     public UserForm(String userName, String passWord) {
         this.userName = userName;
         this.passWord = passWord;
+    }
+
+    public UserForm(User user){
+        userName = user.getUserName();
+        passWord = user.getPassWord();
     }
 
     public String getUserName() {

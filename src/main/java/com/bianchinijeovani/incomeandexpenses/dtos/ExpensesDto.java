@@ -2,37 +2,26 @@ package com.bianchinijeovani.incomeandexpenses.dtos;
 
 import com.bianchinijeovani.incomeandexpenses.models.Category;
 import com.bianchinijeovani.incomeandexpenses.models.Expenses;
-import com.bianchinijeovani.incomeandexpenses.models.User;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import java.time.LocalDate;
-import java.util.stream.Collectors;
 
 public class ExpensesDto {
-
-
     private String description;
     private Double value;
     private Category category;
-    private User user;
+    private String userName;
 
-
-    public ExpensesDto(String description, Double value, Category category, User user) {
+    public ExpensesDto(String description, Double value, Category category, String userName) {
         this.description = description;
         this.value = value;
         this.category = category;
-
-
+        this.userName = userName;
     }
 
     public ExpensesDto(Expenses expense) {
         description = expense.getDescription();
         value = expense.getValue();
         category = expense.getCategory();
-        user = expense.getUser();
-
+        userName = expense.getUser().getUserName();
     }
-
 
     public String getDescription() {
         return description;
@@ -58,11 +47,11 @@ public class ExpensesDto {
         this.category = category;
     }
 
-    public User getUser() {
-        return user;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 }

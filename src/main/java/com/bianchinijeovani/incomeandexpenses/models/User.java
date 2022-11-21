@@ -8,14 +8,15 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Table(name = "tb_user")
 public class User implements Serializable, UserDetails {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private UUID id;
     @Column(nullable = false, unique = true)
     private String userName;
     @Column(nullable = false)
@@ -23,7 +24,6 @@ public class User implements Serializable, UserDetails {
 
     @OneToMany(mappedBy = "user")
     private List<Expenses> listExpenses = new ArrayList<>();
-
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -60,11 +60,11 @@ public class User implements Serializable, UserDetails {
         return true;
     }
 
-    public Long getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 

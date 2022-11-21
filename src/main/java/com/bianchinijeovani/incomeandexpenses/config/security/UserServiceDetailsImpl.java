@@ -12,42 +12,38 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
-
 @Service
 public class UserServiceDetailsImpl implements UserDetailsService {
-
 
     @Autowired
     private UserRepository userRepository;
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-
+    public User loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findByUserName(username).orElseThrow(() -> new UsernameNotFoundException("User Not Found"));
-
         return user;
     }
 
-    @Transactional
-    public User getCurrentUser(){
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String username = ((User) auth.getPrincipal()).getUsername();
-        return findByUsername(username);
+    public String getUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication instanceof UserDetails) {
+            String currentUser = authentication.getName();
+            return currentUser;
+        } else {
+            return authentication.toString();
+        }
     }
 
-    public User save(UserForm userForm){
+    public User save(UserForm userForm) {
         BCryptPasswordEncoder passWordEncoder = new BCryptPasswordEncoder();
         String passWord = passWordEncoder.encode(userForm.getPassWord());
-
-
         User user = new User();
         user.setUserName(userForm.getUserName());
         user.setPassWord(passWord);
         return userRepository.save(user);
     }
 
-    public User findByUsername(String username){
+    public User findByUsername(String username) {
         User user = userRepository.findByUserName(username).orElseThrow(() -> new UsernameNotFoundException("User Not Found"));
         return user;
     }

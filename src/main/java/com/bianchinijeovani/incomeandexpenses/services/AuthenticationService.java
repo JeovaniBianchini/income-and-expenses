@@ -25,8 +25,6 @@ public class AuthenticationService {
                 .compact();
         res.addHeader("Authorization", PREFIX + " " + JwtToke);
         res.addHeader("Access-Control-Expose_headers", "Authorization");
-
-
     }
 
     static public Authentication getAuthentication(HttpServletRequest request) {

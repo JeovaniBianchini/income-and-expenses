@@ -1,5 +1,6 @@
 package com.bianchinijeovani.incomeandexpenses.models;
 
+import com.bianchinijeovani.incomeandexpenses.dtos.UserDto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -45,7 +46,6 @@ public class Expenses implements Serializable{
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
-
 
     public Expenses(){
     }
