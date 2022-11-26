@@ -58,8 +58,9 @@ public class ExpensesService {
         return expensesResponse;
     }
 
-    public List<Expenses> findAll() {
-        return expensesRepository.findAll();
+    public List<Expenses> findAllByUser(User user) {
+
+        return expensesRepository.findAllByUser(user);
     }
 
     public Optional<Expenses> findById(Long id) {

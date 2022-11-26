@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public interface ExpensesRepository extends JpaRepository<Expenses, Long> {
 
@@ -25,7 +26,5 @@ public interface ExpensesRepository extends JpaRepository<Expenses, Long> {
     @Query("SELECT SUM(m.value) FROM Expenses m WHERE m.date = :localDate")
     Double getTotalValue(@Param("localDate") LocalDate localDate);
 
-
-
-
+    List<Expenses> findAllByUser(User user);
 }

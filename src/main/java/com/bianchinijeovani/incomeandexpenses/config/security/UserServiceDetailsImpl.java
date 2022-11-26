@@ -1,6 +1,9 @@
 package com.bianchinijeovani.incomeandexpenses.config.security;
 
+import com.bianchinijeovani.incomeandexpenses.dtos.UserDto;
 import com.bianchinijeovani.incomeandexpenses.dtos.UserForm;
+import com.bianchinijeovani.incomeandexpenses.models.Expenses;
+import com.bianchinijeovani.incomeandexpenses.models.Income;
 import com.bianchinijeovani.incomeandexpenses.models.User;
 import com.bianchinijeovani.incomeandexpenses.repositorys.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +15,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class UserServiceDetailsImpl implements UserDetailsService {
 
@@ -22,16 +27,6 @@ public class UserServiceDetailsImpl implements UserDetailsService {
     public User loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findByUserName(username).orElseThrow(() -> new UsernameNotFoundException("User Not Found"));
         return user;
-    }
-
-    public String getUser() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication instanceof UserDetails) {
-            String currentUser = authentication.getName();
-            return currentUser;
-        } else {
-            return authentication.toString();
-        }
     }
 
     public User save(UserForm userForm) {
@@ -48,5 +43,14 @@ public class UserServiceDetailsImpl implements UserDetailsService {
         return user;
     }
 
+
+    public List<UserDto> findAll(){
+        List<User> listUser = userRepository.findAll();
+        List<UserDto> listDto = listUser.stream().map(dto -> {
+            UserDto userDto = new UserDto(dto.getId(), dto.getUserName());
+            return userDto;
+        }).toList();
+        return listDto;
+    }
 
 }

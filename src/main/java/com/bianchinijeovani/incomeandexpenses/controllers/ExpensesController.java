@@ -2,6 +2,7 @@ package com.bianchinijeovani.incomeandexpenses.controllers;
 
 import com.bianchinijeovani.incomeandexpenses.config.security.UserServiceDetailsImpl;
 import com.bianchinijeovani.incomeandexpenses.dtos.ExpensesDto;
+import com.bianchinijeovani.incomeandexpenses.dtos.ExpensesDtoReturn;
 import com.bianchinijeovani.incomeandexpenses.models.Expenses;
 import com.bianchinijeovani.incomeandexpenses.models.User;
 import com.bianchinijeovani.incomeandexpenses.services.CategoryService;
@@ -45,10 +46,11 @@ public class ExpensesController {
     }
 
     @GetMapping
-    public ResponseEntity<List<ExpensesDto>> findAll() {
-        List<Expenses> expenses = expensesService.findAll();
-        List<ExpensesDto> expensesDtos = expenses.stream().map(exp -> {
-            ExpensesDto expensesDto = new ExpensesDto(exp.getDescription(), exp.getValue(), exp.getCategory(), exp.getUser().getUserName());
+    public ResponseEntity<List<ExpensesDtoReturn>> findAll(Principal principal) {
+        User user = userServiceDetails.loadUserByUsername(principal.getName());
+        List<Expenses> expenses = expensesService.findAllByUser(user);
+        List<ExpensesDtoReturn> expensesDtos = expenses.stream().map(exp -> {
+            ExpensesDtoReturn expensesDto = new ExpensesDtoReturn(exp.getDescription(), exp.getValue(), exp.getDate(), exp.getCategory());
             return expensesDto;
         }).toList();
         return ResponseEntity.status(HttpStatus.OK).body(expensesDtos);
